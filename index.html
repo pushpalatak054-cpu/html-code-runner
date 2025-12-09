@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Code Runner - Live Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            gap: 10px;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .editor-section, .preview-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .btn-run {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-run:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-clear {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: #da190b;
+            transform: translateY(-2px);
+        }
+
+        .btn-sample {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-sample:hover {
+            background: #0b7dda;
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+
+        iframe {
+            flex: 1;
+            border: none;
+            background: white;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 HTML Code Runner</h1>
+        <p>Write HTML, CSS, and JavaScript - See it live!</p>
+    </div>
+
+    <div class="container">
+        <div class="editor-section">
+            <div class="section-header">
+                <span>📝 Code Editor</span>
+                <div class="controls">
+                    <button class="btn btn-sample" onclick="loadSample()">Load Sample</button>
+                    <button class="btn btn-clear" onclick="clearCode()">Clear</button>
+                    <button class="btn btn-run" onclick="runCode()">▶ Run Code</button>
+                </div>
+            </div>
+            <textarea id="codeEditor" placeholder="Write your HTML, CSS, and JavaScript here..."><!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Welcome to HTML Code Runner! 🎉</h1>
+        <p>Click the button below to see JavaScript in action</p>
+        <button onclick="showMessage()">Click Me!</button>
+    </div>
+
+    <script>
+        function showMessage() {
+            alert('Hello! You just ran JavaScript code! 🚀');
+        }
+    </script>
+</body>
+</html></textarea>
+        </div>
+
+        <div class="preview-section">
+            <div class="section-header">
+                <span>👁️ Live Preview</span>
+            </div>
+            <iframe id="preview"></iframe>
+        </div>
+    </div>
+
+    <div class="footer">
+        Made with ❤️ using Bhindi | Press "Run Code" to see your changes
+    </div>
+
+    <script>
+        const codeEditor = document.getElementById('codeEditor');
+        const preview = document.getElementById('preview');
+
+        // Run code on page load
+        window.addEventListener('load', () => {
+            runCode();
+        });
+
+        // Auto-run on Ctrl+Enter
+        codeEditor.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                runCode();
+            }
+        });
+
+        function runCode() {
+            const code = codeEditor.value;
+            const previewDoc = preview.contentDocument || preview.contentWindow.document;
+            previewDoc.open();
+            previewDoc.write(code);
+            previewDoc.close();
+        }
+
+        function clearCode() {
+            if (confirm('Are you sure you want to clear all code?')) {
+                codeEditor.value = '';
+                const previewDoc = preview.contentDocument || preview.contentWindow.document;
+                previewDoc.open();
+                previewDoc.write('');
+                previewDoc.close();
+            }
+        }
+
+        function loadSample() {
+            codeEditor.value = `<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #00d4ff; }
+            50% { text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff; }
+        }
+        .counter {
+            text-align: center;
+            font-size: 48px;
+            margin: 30px 0;
+            color: #ff6b6b;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .increment { background: #4CAF50; color: white; }
+        .decrement { background: #f44336; color: white; }
+        .reset { background: #2196F3; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Counter</h1>
+        <div class="counter" id="counter">0</div>
+        <div class="buttons">
+            <button class="decrement" onclick="changeCounter(-1)">-</button>
+            <button class="reset" onclick="resetCounter()">Reset</button>
+            <button class="increment" onclick="changeCounter(1)">+</button>
+        </div>
+    </div>
+
+    <script>
+        let count = 0;
+        const counterElement = document.getElementById('counter');
+
+        function changeCounter(value) {
+            count += value;
+            updateDisplay();
+        }
+
+        function resetCounter() {
+            count = 0;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            counterElement.textContent = count;
+            counterElement.style.color = count > 0 ? '#4CAF50' : count < 0 ? '#f44336' : '#ff6b6b';
+        }
+    </script>
+</body>
+</html>`;
+            runCode();
+        }
+    </script>
+</body>
+</html>
